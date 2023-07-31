@@ -1,0 +1,38 @@
+spring:
+ cloud:
+   gateway:
+     routes:
+       - id: order-app
+         uri: lb://ORDER-APP
+         predicates:
+           - Path=/order/**
+         filters:
+           - AuthenticationFilter
+
+
+       - id: payment-service
+         uri: lb://PAYMENT-SERVICE
+         predicates:
+           - Path=/payment/**
+         filters:
+           - AuthenticationFilter
+           
+       - id: order-service
+         uri: lb://ORDER-SERVICE
+         predicates:
+           - Path=/process/**
+         filters:
+           - AuthenticationFilter
+
+       - id: identity-service
+         uri: lb://IDENTITY-SERVICE
+         predicates:
+           - Path=/auth/**
+
+ application:
+   name: ORDER-GATEWAY
+
+eureka:
+  client:
+    service-url:
+      defaultZone : http://localhost:8761/eureka/

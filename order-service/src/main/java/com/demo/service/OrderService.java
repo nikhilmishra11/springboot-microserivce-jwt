@@ -14,7 +14,9 @@ import com.demo.entity.Order;
 import com.demo.repo.OrderRepo;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class OrderService {
@@ -22,12 +24,13 @@ public class OrderService {
 	private final OrderRepo orderRepo;
 	public OrderResponseDTO processOrder(OrderRequestDTO dto) {
 		Order order = Order.builder()
-		.id(1234)
+		//.id(1234)
 		.createdDateTime(LocalDateTime.now())
 		.status("Pending")
 		.productId(dto.getProductId())
 		.build();
-		orderRepo.save(order);
+		order = orderRepo.save(order);
+		log.info("{}", order);
 		return OrderResponseDTO.builder()
 				.orderId(new Random().nextLong())
 				.status("Pending")

@@ -31,7 +31,7 @@ public class OrderProcessingController {
     }
     
     @GetMapping("/{orderId}")
-	public ResponseEntity<String> getStatus(@PathVariable String orderId) {
+	public ResponseEntity<String> getStatus(@PathVariable Long orderId) {
     	log.info("OrderProcessingController.getStatus(): order id: {}", orderId);
 		return ResponseEntity.ok(orderService.getStatus(orderId));
 	}
